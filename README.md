@@ -4,13 +4,13 @@ A browser-only page that turns an X12 835 remittance advice into a readable docu
 
 It's built for engineers who are new to healthcare EDI, and for anyone who has had to work out why a deposit doesn't match the claims behind it.
 
-**Use it now: [X12 835 Explainer](https://zarkara.github.io/X12-835-Helper/).** Nothing you load is uploaded — see the privacy guarantee below.
+**Use it now: [X12 835 Explainer](https://zarkara.github.io/X12-Helper/).** Nothing you load is uploaded — see the privacy guarantee below.
 
 Its sister project, [HL7-Helper](https://github.com/zarkara/HL7-Helper), does the same for HL7 v2 registration, charges, orders and results.
 
 ## Quick start
 
-1. Open [the hosted page](https://zarkara.github.io/X12-835-Helper/), or clone the repo and double-click `index.html`. Either way there is no server, build step or install.
+1. Open [the hosted page](https://zarkara.github.io/X12-Helper/), or clone the repo and double-click `index.html`. Either way there is no server, build step or install.
 2. Choose a file, drop one in, or paste a remittance. Or click the sample.
 3. Step through the records with **Prev / Next**, the dropdown, or the ← → keys.
 
