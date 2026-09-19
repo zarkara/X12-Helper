@@ -1,0 +1,2 @@
+# HL7 samples keep LF endings in the repo; the parser accepts CR, LF and CRLF.
+*.hl7 text eol=lf

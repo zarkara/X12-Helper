@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- No network access of any kind: patient data never leaves this tab. See docs/adr/0001-client-side-only.md -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>X12 835 Explainer</title>
+  <link rel="stylesheet" href="core/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <span class="brand">X12 835 Helper</span>
+      <h1>X12 835 Explainer</h1>
+      <p class="lede">Turns a remittance advice into a readable document: the payment, then one record per claim with every adjustment explained and the balancing checked.</p>
+      <p class="privacy"><strong>Private by design.</strong> Runs entirely in this browser tab. Nothing is uploaded, saved or sent anywhere.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <details id="input-panel" class="panel" open>
+      <summary>Input</summary>
+      <div id="drop-zone" class="drop-zone">
+        <div class="actions">
+          <label class="button file-pick">Choose file<input type="file" id="file-input" accept=".835,.edi,.txt,.dat,.rmt,text/plain"></label>
+          <span class="muted">or drop a file anywhere in this box, or paste messages below</span>
+        </div>
+        <label class="visually-hidden" for="paste-input">X12 835 text</label>
+        <textarea id="paste-input" rows="8" spellcheck="false" autocomplete="off" placeholder="ISA*00*          *00*          *ZZ*PAYER          *ZZ*PROVIDER       *260921*1015*^*00501*000000101*0*P*:~"></textarea>
+        <div class="actions">
+          <button id="analyze-btn" class="button primary" type="button">Analyze pasted text</button>
+          <span id="sample-buttons" class="button-group"></span>
+          <button id="clear-btn" class="button" type="button">Clear</button>
+        </div>
+      </div>
+    </details>
+
+    <details id="profiles-panel" class="panel">
+      <summary>Vendor profiles</summary>
+      <p class="muted">Profiles add payer-specific meaning (reason-code descriptions, payer-specific qualifiers) on top of the standard. Anything a profile explains is tagged with its name.</p>
+      <div id="profiles-list"></div>
+      <div class="actions">
+        <label class="button file-pick">Load profile (.json)<input type="file" id="profile-file-input" accept=".json,application/json"></label>
+        <button id="stub-btn" class="button" type="button" disabled>Download profile stub</button>
+      </div>
+      <p class="muted small">The stub lists segments, field positions and codes this page could not explain. It never includes field contents.</p>
+    </details>
+
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+    <div id="envelope"></div>
+
+    <nav id="record-nav" class="record-nav" aria-label="Record navigation" hidden>
+      <button id="prev-btn" class="button" type="button" aria-label="Previous record">&#8592; Prev</button>
+      <label class="visually-hidden" for="record-select">Jump to record</label>
+      <select id="record-select"></select>
+      <button id="next-btn" class="button" type="button" aria-label="Next record">Next &#8594;</button>
+      <span id="record-position" class="muted"></span>
+      <label class="toggle"><input type="checkbox" id="show-empty"> Show empty elements</label>
+      <span class="muted small hint">Tip: ← → keys move between records</span>
+    </nav>
+
+    <section id="output" aria-live="polite"></section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap muted small">
+      An explainer, not a validator. Its sister project, <a href="https://github.com/zarkara/HL7-Helper">HL7-Helper</a>, does the same for HL7 v2. Base dictionary: X12 005010X221 segment and element names with plain-English explanations written for this project. Claim adjustment reason codes (CARC), remark codes (RARC) and NUBC code descriptions are not included — load them through a vendor profile. X12 is a trademark of X12 Incorporated; this project is not affiliated with or endorsed by X12. Apache-2.0.
+    </div>
+  </footer>
+
+  <script src="core/registry.js"></script>
+  <script src="core/codes.js"></script>
+  <script src="core/records.js"></script>
+  <script src="core/dom.js"></script>
+  <script src="core/shell.js"></script>
+  <script src="standards/x12-835/parser.js"></script>
+  <script src="standards/x12-835/interpret.js"></script>
+  <script src="standards/x12-835/dictionary.js"></script>
+  <script src="standards/x12-835/render.js"></script>
+  <script src="standards/x12-835/sample.js"></script>
+
+  <!-- Vendor profiles. Add your fork's profiles here (payer CARC/RARC packs go here too). -->
+  <script src="profiles/x12-835/example-payer.js"></script>
+
+  <script src="standards/x12-835/page.js"></script>
+</body>
+</html>
