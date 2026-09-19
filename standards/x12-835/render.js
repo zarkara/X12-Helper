@@ -312,6 +312,11 @@
       };
     },
     recordLabel: x12.recordLabel,
+    groupOf(record, dictionary) {
+      if (record.kind === 'payment') return 'Payment summary';
+      const status = x12.lookupCode(dictionary, '1029', x12.describeRecord(record).status);
+      return status.status === CODE_STATUS.KNOWN ? status.meaning : 'Claim';
+    },
     renderRecord,
     renderEnvelope,
     collectUnknowns: x12.collectUnknowns,

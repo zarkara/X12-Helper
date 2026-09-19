@@ -104,5 +104,59 @@
     });
   }
 
-  HCX.records = { isEmptyField, isExplicitNull, collectGlance, collectUnknowns, populatedPositions };
+  /*
+   * Finding one record in a file of thousands.
+   *
+   * A real feed dump or remittance batch has hundreds of records, so the page
+   * needs a way in besides prev/next: counts by kind, and a filter that
+   * searches both the label a reader sees and the raw text underneath.
+   */
+
+  const searchTextCache = new WeakMap();
+
+  /** Everything in a record that a filter should look at, lower-cased once. */
+  function searchTextOf(record, label) {
+    const cached = searchTextCache.get(record);
+    if (cached) return cached;
+    const text = [label || '', ...record.segments.map((segment) => segment.raw)].join('\n').toLowerCase();
+    searchTextCache.set(record, text);
+    return text;
+  }
+
+  /**
+   * Indexes of the records a filter term selects. Terms separated by spaces
+   * all have to match, which is how "denied 7788" finds one claim.
+   */
+  function filterRecords(records, term, labelOf) {
+    const terms = String(term || '').toLowerCase().split(/\s+/).filter(Boolean);
+    const all = records.map((record, index) => index);
+    if (!terms.length) return all;
+    return all.filter((index) => {
+      const text = searchTextOf(records[index], labelOf ? labelOf(records[index]) : '');
+      return terms.every((one) => text.includes(one));
+    });
+  }
+
+  /** Counts by group (message type, record kind), most common first. */
+  function groupRecords(records, groupOf) {
+    const counts = new Map();
+    records.forEach((record) => {
+      const key = groupOf(record) || 'other';
+      counts.set(key, (counts.get(key) || 0) + 1);
+    });
+    return [...counts.entries()]
+      .map(([key, count]) => ({ key, count }))
+      .sort((a, b) => b.count - a.count || a.key.localeCompare(b.key));
+  }
+
+  HCX.records = {
+    isEmptyField,
+    isExplicitNull,
+    collectGlance,
+    collectUnknowns,
+    populatedPositions,
+    filterRecords,
+    groupRecords,
+    searchTextOf,
+  };
 })(globalThis);

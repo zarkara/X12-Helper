@@ -5,7 +5,8 @@
  *
  *   { standardId, recordNoun, parse(text) -> { records, warnings, envelope },
  *     recordLabel(record, dict), renderRecord(record, dict, options),
- *     renderEnvelope(envelope, dict), collectUnknowns(record, dict, stub) }
+ *     renderEnvelope(envelope, dict), collectUnknowns(record, dict, stub),
+ *     groupOf(record, dict) -> string   (optional; drives the file overview) }
  *
  * Privacy: nothing is persisted (no storage, no network). "Clear" drops all data.
  */
@@ -14,14 +15,16 @@
 
   const HCX = root.HCX;
   const { el } = HCX.dom;
+  const { filterRecords, groupRecords } = HCX.records;
   const FORM_TAGS = ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'];
 
   function startShell({ adapter, samples }) {
     const ui = bindElements();
     const state = {
       records: [],
+      visible: [],        // indexes into records, after the filter
       envelope: [],
-      index: 0,
+      index: 0,           // position within `visible`
       sourceLabel: '',
       activeProfileIds: new Set(HCX.listProfiles(adapter.standardId).filter((profile) => profile.activeByDefault).map((profile) => profile.id)),
       dictionary: null,
@@ -44,6 +47,7 @@
         return;
       }
       Object.assign(state, { records: parsed.records, envelope: parsed.envelope, index: 0, sourceLabel });
+      ui.filter.value = '';
       const count = parsed.records.length;
       showStatus(`${count} ${adapter.recordNoun}${count === 1 ? '' : 's'} found in ${sourceLabel}.`, 'ok', parsed.warnings);
       ui.inputPanel.open = false;
@@ -52,35 +56,82 @@
     }
 
     function refreshAll() {
+      applyFilter();
+      renderOverview();
+    }
+
+    function labelOf(record) {
+      return adapter.recordLabel(record, state.dictionary);
+    }
+
+    /** Re-runs the filter, keeping the current record in view when it survives. */
+    function applyFilter() {
+      const wasShowing = state.visible[state.index];
+      state.visible = filterRecords(state.records, ui.filter.value, labelOf);
+      const stillVisible = state.visible.indexOf(wasShowing);
+      state.index = stillVisible === -1 ? 0 : stillVisible;
       renderNavigatorOptions();
       renderCurrentRecord();
     }
 
+    /** Counts by kind, as buttons that filter down to that kind. */
+    function renderOverview() {
+      ui.overview.replaceChildren();
+      if (state.records.length < 2 || !adapter.groupOf) return;
+
+      const groups = groupRecords(state.records, (record) => adapter.groupOf(record, state.dictionary));
+      ui.overview.appendChild(el('div', { className: 'overview' }, [
+        el('span', { className: 'overview-total', text: `${state.records.length} ${adapter.recordNoun}s` }),
+        ...groups.map(({ key, count }) => el('button', {
+          className: 'button chip',
+          text: `${key} · ${count}`,
+          attrs: { type: 'button', title: `Show only: ${key}` },
+          on: { click: () => setFilter(key) },
+        })),
+        ui.filter.value ? el('button', {
+          className: 'button chip',
+          text: 'Show all',
+          attrs: { type: 'button' },
+          on: { click: () => setFilter('') },
+        }) : null,
+      ]));
+    }
+
+    function setFilter(term) {
+      ui.filter.value = term;
+      applyFilter();
+      renderOverview();
+    }
+
     function renderNavigatorOptions() {
       ui.nav.hidden = state.records.length === 0;
-      ui.select.replaceChildren(...state.records.map((record, index) =>
-        el('option', { text: adapter.recordLabel(record, state.dictionary), attrs: { value: index } })));
+      ui.select.replaceChildren(...state.visible.map((recordIndex, position) =>
+        el('option', { text: labelOf(state.records[recordIndex]), attrs: { value: position } })));
       ui.envelope.replaceChildren();
       const envelopeNode = adapter.renderEnvelope(state.envelope, state.dictionary);
       if (envelopeNode) ui.envelope.appendChild(envelopeNode);
     }
 
     function renderCurrentRecord() {
-      if (!state.records.length) {
+      const total = state.visible.length;
+      if (!total) {
+        ui.position.textContent = state.records.length ? `nothing matches "${ui.filter.value}"` : '';
+        ui.prev.disabled = true;
+        ui.next.disabled = true;
         ui.output.replaceChildren();
         return;
       }
-      const total = state.records.length;
       ui.select.value = String(state.index);
-      ui.position.textContent = `${state.index + 1} of ${total}`;
+      const filtered = total < state.records.length ? ` (filtered from ${state.records.length})` : '';
+      ui.position.textContent = `${state.index + 1} of ${total}${filtered}`;
       ui.prev.disabled = state.index === 0;
       ui.next.disabled = state.index === total - 1;
-      ui.output.replaceChildren(adapter.renderRecord(state.records[state.index], state.dictionary, { showEmpty: ui.showEmpty.checked }));
+      ui.output.replaceChildren(adapter.renderRecord(state.records[state.visible[state.index]], state.dictionary, { showEmpty: ui.showEmpty.checked }));
     }
 
-    function goTo(index) {
-      if (!state.records.length) return;
-      const clamped = Math.max(0, Math.min(state.records.length - 1, index));
+    function goTo(position) {
+      if (!state.visible.length) return;
+      const clamped = Math.max(0, Math.min(state.visible.length - 1, position));
       if (clamped === state.index) return;
       state.index = clamped;
       renderCurrentRecord();
@@ -88,8 +139,9 @@
     }
 
     function clearAll() {
-      Object.assign(state, { records: [], envelope: [], index: 0, sourceLabel: '' });
+      Object.assign(state, { records: [], visible: [], envelope: [], index: 0, sourceLabel: '' });
       ui.paste.value = '';
+      ui.filter.value = '';
       ui.fileInput.value = '';
       ui.inputPanel.open = true;
       ui.stubButton.disabled = true;
@@ -196,8 +248,8 @@
     }
 
     function onKeydown(event) {
-      if (!state.records.length || FORM_TAGS.includes(event.target.tagName) || event.altKey || event.ctrlKey || event.metaKey) return;
-      const moves = { ArrowLeft: state.index - 1, ArrowRight: state.index + 1, Home: 0, End: state.records.length - 1 };
+      if (!state.visible.length || FORM_TAGS.includes(event.target.tagName) || event.altKey || event.ctrlKey || event.metaKey) return;
+      const moves = { ArrowLeft: state.index - 1, ArrowRight: state.index + 1, Home: 0, End: state.visible.length - 1 };
       if (!(event.key in moves)) return;
       event.preventDefault();
       goTo(moves[event.key]);
@@ -214,6 +266,7 @@
       ui.next.addEventListener('click', () => goTo(state.index + 1));
       ui.select.addEventListener('change', () => goTo(Number(ui.select.value)));
       ui.showEmpty.addEventListener('change', renderCurrentRecord);
+      ui.filter.addEventListener('input', () => { applyFilter(); renderOverview(); });
       root.document.addEventListener('keydown', onKeydown);
 
       ui.dropZone.addEventListener('dragover', (event) => { event.preventDefault(); ui.dropZone.classList.add('dragging'); });
@@ -249,6 +302,8 @@
       stubButton: byId('stub-btn'),
       status: byId('status'),
       envelope: byId('envelope'),
+      overview: byId('overview'),
+      filter: byId('record-filter'),
       nav: byId('record-nav'),
       prev: byId('prev-btn'),
       next: byId('next-btn'),

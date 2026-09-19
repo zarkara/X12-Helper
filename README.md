@@ -4,15 +4,17 @@ A browser-only page that turns an X12 835 remittance advice into a readable docu
 
 It's built for engineers who are new to healthcare EDI, and for anyone who has had to work out why a deposit doesn't match the claims behind it.
 
-**Use it now: [X12 835 Explainer](https://zarkara.github.io/X12-Helper/).** Nothing you load is uploaded — see the privacy guarantee below.
+**Use it now: [X12 835 Explainer](https://zarkara.github.io/X12-835-Helper/).** Nothing you load is uploaded — see the privacy guarantee below.
 
 Its sister project, [HL7-Helper](https://github.com/zarkara/HL7-Helper), does the same for HL7 v2 registration, charges, orders and results.
 
 ## Quick start
 
-1. Open [the hosted page](https://zarkara.github.io/X12-Helper/), or clone the repo and double-click `index.html`. Either way there is no server, build step or install.
+1. Open [the hosted page](https://zarkara.github.io/X12-835-Helper/), or clone the repo and double-click `index.html`. Either way there is no server, build step or install.
 2. Choose a file, drop one in, or paste a remittance. Or click the sample.
 3. Step through the records with **Prev / Next**, the dropdown, or the ← → keys.
+
+A payer batch can hold hundreds of claims, so the page counts them by what the payer decided — paid, denied, reversed — and turns each count into a filter. The filter box searches the label and the raw segments together, so a claim number, a patient name, a reason code or `denied 97110` takes you straight there.
 
 Working with remittances your organization won't let you open from the internet? Clone the repo and open the file locally. The two copies behave identically.
 
@@ -52,6 +54,7 @@ It explains remittances. It doesn't validate them.
 
 - **Payment summary:** check or EFT number, amount, method, effective date, payer and payee, and the provider-level adjustments that explain the difference from the claim total.
 - **Each claim:** your account number, the patient, the claim status in plain English, the payer's claim number, the balance panel, a service-line table, and a card per segment.
+- **The whole file:** a count per claim outcome above the navigator, each one a button that filters to it, plus a filter box for claim numbers, patients and codes.
 - **Every element** with its name, decoded value, what it means, and a revenue cycle note where it matters.
 - **Flags** for segments and elements the dictionary doesn't cover, and for codes that aren't valid for their element.
 

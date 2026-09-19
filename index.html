@@ -50,12 +50,15 @@
 
     <div id="status" class="status" role="status" aria-live="polite"></div>
     <div id="envelope"></div>
+    <div id="overview"></div>
 
     <nav id="record-nav" class="record-nav" aria-label="Record navigation" hidden>
       <button id="prev-btn" class="button" type="button" aria-label="Previous record">&#8592; Prev</button>
       <label class="visually-hidden" for="record-select">Jump to record</label>
       <select id="record-select"></select>
       <button id="next-btn" class="button" type="button" aria-label="Next record">Next &#8594;</button>
+      <label class="visually-hidden" for="record-filter">Filter</label>
+      <input id="record-filter" type="search" class="filter" placeholder="Filter: claim number, patient, code…" autocomplete="off" spellcheck="false">
       <span id="record-position" class="muted"></span>
       <label class="toggle"><input type="checkbox" id="show-empty"> Show empty elements</label>
       <span class="muted small hint">Tip: ← → keys move between records</span>

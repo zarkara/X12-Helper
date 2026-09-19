@@ -119,3 +119,27 @@ test('a payer profile can supply the reason-code descriptions the repo cannot sh
     note: dictionary.tables['1033'].note, meaning: 'Charge exceeds the contracted rate', source: 'Test CARC pack',
   });
 });
+
+test('filters records by claim number, patient or any raw code', () => {
+  const label = (record) => x12.recordLabel(record, dictionary);
+
+  assert.deepEqual(HCX.records.filterRecords(records, '', label), [0, 1, 2]);
+  assert.deepEqual(HCX.records.filterRecords(records, 'ACCT7788991', label), [2]);
+  assert.deepEqual(HCX.records.filterRecords(records, 'denied', label), [2], 'the label is searched too');
+  assert.deepEqual(HCX.records.filterRecords(records, 'WO', label), [0], 'finds the take-back in the payment record');
+  assert.deepEqual(HCX.records.filterRecords(records, 'denied 97110', label), [2], 'every term has to match');
+});
+
+test('groups records for the file overview by what the payer decided', () => {
+  const groupOf = (record) => {
+    if (record.kind === 'payment') return 'Payment summary';
+    const status = x12.lookupCode(dictionary, '1029', x12.describeRecord(record).status);
+    return status.status === x12.CODE_STATUS.KNOWN ? status.meaning : 'Claim';
+  };
+
+  assert.deepEqual(HCX.records.groupRecords(records, groupOf), [
+    { key: 'Denied', count: 1 },
+    { key: 'Payment summary', count: 1 },
+    { key: 'Processed as primary', count: 1 },
+  ]);
+});
