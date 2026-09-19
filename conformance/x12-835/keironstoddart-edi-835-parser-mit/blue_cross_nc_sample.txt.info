@@ -1,0 +1,34 @@
+blue_cross_nc_sample.txt
+========================
+
+File:          blue_cross_nc_sample.txt
+SHA-256:       a85659d0aaa3049748df35ae834a2fb8201503dc421806b977d01a94a40152bf
+Bytes:         703
+
+Source:        keironstoddart/edi-835-parser
+Repository:    https://github.com/keironstoddart/edi-835-parser
+Commit:        5aa9dd239ef55543844c842b65ab6f691be3f386
+Upstream path: tests/test_edi_835_files/blue_cross_nc_sample.txt
+Permalink:     https://github.com/keironstoddart/edi-835-parser/blob/5aa9dd239ef55543844c842b65ab6f691be3f386/tests/test_edi_835_files/blue_cross_nc_sample.txt
+Retrieved:     2026-09-19
+Verified:      This file is byte-identical to the upstream blob at this
+               commit.
+
+Licence:       MIT
+Licence text:  https://github.com/keironstoddart/edi-835-parser/blob/master/LICENSE
+               (copy: LICENSE)
+Copyright:     Copyright (c) 2018 The Python Packaging Authority (as the
+               upstream LICENSE names the holder; reproduced as found).
+Attribution:   Required. MIT obliges the copyright notice and the full
+               permission notice to travel with the file; both are in LICENSE
+               beside it and in conformance/NOTICE.
+
+Content:       Payer-shaped test files with placeholder names and identifiers,
+               committed upstream under MIT. Not derived from an
+               implementation guide.
+Covers:        NY eMedNY Medicaid test batch with primary and secondary
+               payers, BCBS NC, and a legacy UnitedHealthcare layout.
+
+Note:          This file was written by the source above, not by this project.
+               It is redistributed unchanged under the licence named here. See
+               conformance/README.md and conformance/NOTICE.

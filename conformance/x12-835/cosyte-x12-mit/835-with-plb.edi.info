@@ -1,0 +1,35 @@
+835-with-plb.edi
+================
+
+File:          835-with-plb.edi
+SHA-256:       fa078eee1c8925d5c03cfe7c835f93456a66182a53b1569cbf0ebf1c731e772b
+Bytes:         726
+
+Source:        cosyte/x12
+Repository:    https://github.com/cosyte/x12
+Commit:        8881beef5eb7ac33c2667d0fa21003f2bac9c832
+Upstream path: test/fixtures/remit/835-with-plb.edi
+Permalink:     https://github.com/cosyte/x12/blob/8881beef5eb7ac33c2667d0fa21003f2bac9c832/test/fixtures/remit/835-with-plb.edi
+Retrieved:     2026-09-19
+Verified:      This file is byte-identical to the upstream blob at this
+               commit.
+
+Licence:       MIT
+Licence text:  https://github.com/cosyte/x12/blob/main/LICENSE (copy: LICENSE)
+Copyright:     Copyright (c) 2026 Cosyte
+Attribution:   Required. MIT obliges the copyright notice and the full
+               permission notice to travel with the file; both are in LICENSE
+               beside it and in conformance/NOTICE.
+
+Content:       Synthetic. The repository states its fixtures are hand-authored
+               against the transaction-set structure, with nothing captured
+               from a feed, a clearinghouse sample or a partner's test file,
+               and nothing de-identified from anything. Structure is factual;
+               no implementation-guide text is reproduced.
+Covers:        Medicare-shaped professional remittance, multi-claim, PLB with
+               a WO offset, mixed CARC and RARC, a deliberately unbalanced
+               file, and a clearinghouse quirk.
+
+Note:          This file was written by the source above, not by this project.
+               It is redistributed unchanged under the licence named here. See
+               conformance/README.md and conformance/NOTICE.

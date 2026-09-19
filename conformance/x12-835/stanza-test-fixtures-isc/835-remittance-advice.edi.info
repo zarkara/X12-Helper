@@ -1,0 +1,32 @@
+835-remittance-advice.edi
+=========================
+
+File:          835-remittance-advice.edi
+SHA-256:       afb785a27723cce0d006f794c0c7019e4f2f2f8aa168a1fc65894b3d1839e4fb
+Bytes:         556
+
+Source:        DrMkdaddy/stanza-test-fixtures
+Repository:    https://github.com/DrMkdaddy/stanza-test-fixtures
+Commit:        63e3feec950f150c4e71bb16f703fe960dcfe6b6
+Upstream path: samples/835-remittance-advice.edi
+Permalink:     https://github.com/DrMkdaddy/stanza-test-fixtures/blob/63e3feec950f150c4e71bb16f703fe960dcfe6b6/samples/835-remittance-advice.edi
+Retrieved:     2026-09-19
+Verified:      This file is byte-identical to the upstream blob at this
+               commit.
+
+Licence:       ISC
+Licence text:  https://github.com/DrMkdaddy/stanza-test-fixtures/blob/main/LICENSE
+               (copy: LICENSE)
+Copyright:     ISC License. Copyright (c) 2026 Stanza
+Attribution:   Required. ISC obliges the copyright notice and the permission
+               notice to travel with the file; both are in LICENSE beside it
+               and in conformance/NOTICE. ISC is BSD/MIT-equivalent and
+               Apache-2.0 compatible.
+
+Content:       Synthetic fixture with generic payer and provider names. Not
+               derived from an implementation guide.
+Covers:        A minimal professional claim with a CO-45 adjustment.
+
+Note:          This file was written by the source above, not by this project.
+               It is redistributed unchanged under the licence named here. See
+               conformance/README.md and conformance/NOTICE.

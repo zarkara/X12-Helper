@@ -1,0 +1,36 @@
+example_6.835
+=============
+
+File:          example_6.835
+SHA-256:       0734d1d9d31812372028317f61a19afa89a1ab727c7d0c807bb3556e9f81a6b3
+Bytes:         1522
+
+Source:        diasks2/era_835_parser
+Repository:    https://github.com/diasks2/era_835_parser
+Commit:        d6e021f4e0442ed5697eb62f974a023ab6cb1206
+Upstream path: spec/example_6.835
+Permalink:     https://github.com/diasks2/era_835_parser/blob/d6e021f4e0442ed5697eb62f974a023ab6cb1206/spec/example_6.835
+Retrieved:     2026-09-19
+Verified:      This file is byte-identical to the upstream blob at this
+               commit.
+
+Licence:       MIT
+Licence text:  https://github.com/diasks2/era_835_parser/blob/master/LICENSE.txt
+               (copy: LICENSE)
+Copyright:     The MIT License (MIT). Copyright (c) 2019 Kevin S. Dias
+Attribution:   Required. MIT obliges the copyright notice and the full
+               permission notice to travel with the file; both are in LICENSE
+               beside it and in conformance/NOTICE.
+
+Content:       Real-world-shaped remittances with names and identifiers
+               scrubbed, committed upstream under MIT. Payer names are real
+               organizations; patient names are obvious placeholders. Not
+               derived from an implementation guide.
+Covers:        Institutional (MIA) and professional remittances, CO and PR
+               adjustments. example_7 has the richest PLB here: FB forward
+               balance, WO withholding, CS capitation, both signs, two
+               transaction sets.
+
+Note:          This file was written by the source above, not by this project.
+               It is redistributed unchanged under the licence named here. See
+               conformance/README.md and conformance/NOTICE.

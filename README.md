@@ -37,7 +37,7 @@ See [ADR-0001](docs/adr/0001-client-side-only.md).
 | The payment | BPR, TRN, REF, DTM, N1/N3/N4/PER (payer and payee), LX, TS3, TS2 |
 | Each claim | CLP, CAS, NM1, REF, DTM, AMT, QTY, MIA, MOA |
 | Service lines | SVC, CAS, DTM, AMT, REF, LQ |
-| Provider-level money | PLB (overpayment recovery, interest, forwarding balances) |
+| Provider-level money | PLB, all six adjustment pairs (overpayment recovery, interest, capitation, forwarding balances) |
 | Envelope | ISA, GS, ST, SE, GE, IEA |
 
 ### It checks the arithmetic
@@ -47,6 +47,10 @@ See [ADR-0001](docs/adr/0001-client-side-only.md).
 - **Payment:** BPR02 = the claims paid minus the provider-level adjustments in PLB.
 
 Anything that doesn't balance is flagged where you see it, not buried. That is usually the first question about a remittance, and the reason cash sits unapplied.
+
+The arithmetic is checked against 18 remittances from four unrelated open-source projects, not just our own sample — see [`conformance/`](conformance/). Those files include bare `ST`…`SE` transaction sets with no envelope, ten files whose declared segment count is wrong, and a payer that omits an element and shifts everything after it.
+
+Those 18 files are a deliverable in their own right. Redistributable 835s are hard to come by, because the authoritative examples live in a copyrighted implementation guide, so each one here carries an `.info` sidecar naming the upstream repository, the exact commit and path it came from, a permalink, its SHA-256 and its licence — usable whether or not you use the page.
 
 It explains remittances. It doesn't validate them.
 
@@ -94,7 +98,11 @@ standards/x12-835/
   sample.js                    synthetic sample, generated from samples/
 profiles/x12-835/              payer overlays
 samples/x12-835/               synthetic sample files (the source of truth)
+conformance/                   18 third-party remittances, each with an .info
+                               sidecar recording its source, commit and licence
 tools/build-samples.js         regenerates standards/x12-835/sample.js
+tools/build-conformance-info.js       regenerates the .info sidecars and NOTICE
+tools/update-conformance-baseline.js  regenerates conformance/baseline.json
 tools/sync-core.js             copies core/ from a sibling HL7-Helper checkout
 tests/                         node --test unit tests
 docs/adr/                      architecture decisions
@@ -116,6 +124,17 @@ node tools/sync-core.js ../HL7-Helper    # after changing shared core code
 |---|---|
 | `tests/x12-835-parser.test.js` | ISA-declared delimiters, composites, splitting into payment and claim records, PLB placement, segment counts, files with no envelope |
 | `tests/x12-835-interpret.test.js` | Adjustment triplets, claim/line/payment balancing (including a deliberately broken file), navigator labels, summaries, and that licensed code lists stay external until a profile supplies them |
+| `tests/conformance.test.js` | Parses 18 remittances from four unrelated open-source projects and fails if anything the dictionary used to explain has become unexplained |
+| `tests/provenance.test.js` | Every corpus file has a recorded source, commit and licence, still hashes to what was captured, and its licence is one we may redistribute |
+
+The conformance test is a ratchet. It records how much of a third-party [corpus](conformance/) the dictionary cannot explain and refuses to let that number grow — and it pins the envelope warnings and balance differences exactly, because those are the checks working correctly on defective files. After improving the dictionary, or adding a corpus file:
+
+```sh
+node tools/update-conformance-baseline.js
+node tools/build-conformance-info.js
+```
+
+Read both diffs before committing. See [ADR-0005](docs/adr/0005-conformance-corpus.md).
 
 ## Licensing and content
 
@@ -127,6 +146,7 @@ The code is licensed under [Apache-2.0](LICENSE). Standards content follows [ADR
 | Code lists | Only commonly published values are included. Payer-specific lists are marked as such. |
 | CARC and RARC | Never bundled. Codes are shown and marked "external code list"; load the descriptions through a profile. |
 | NUBC / UB-04 codes | Never bundled. |
+| Third-party test remittances | Only from MIT, Apache-2.0, BSD, ISC and CC0 sources or US Government works, with attribution in [`conformance/NOTICE`](conformance/NOTICE). Nothing is copied from an X12 Technical Report Type 3. |
 
 This is not legal advice. If you're redistributing a fork commercially, check with your counsel.
 

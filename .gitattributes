@@ -1,2 +1,8 @@
 # HL7 samples keep LF endings in the repo; the parser accepts CR, LF and CRLF.
 *.hl7 text eol=lf
+
+# Conformance files are other people's data. Keep the bytes exactly as
+# published: X12 uses its own segment terminator and some upstream files use
+# CRLF. Letting git normalize them would change what the corpus actually
+# tests. This rule comes after the one above so it wins for conformance/.
+conformance/** -text

@@ -20,13 +20,15 @@ if (!sourceRepo) {
   process.exit(2);
 }
 
+const missing = SHARED_FILES.filter((file) => !fs.existsSync(path.join(sourceRepo, 'core', file)));
+if (missing.length) {
+  console.error(`${sourceRepo} does not look like an HL7-Helper checkout — no core/${missing[0]}.`);
+  process.exit(2);
+}
+
 const differences = SHARED_FILES.filter((file) => {
   const from = path.join(sourceRepo, 'core', file);
   const to = path.join(__dirname, '..', 'core', file);
-  if (!fs.existsSync(from)) {
-    console.error(`missing in source: ${from}`);
-    return true;
-  }
   const incoming = fs.readFileSync(from, 'utf8');
   const current = fs.existsSync(to) ? fs.readFileSync(to, 'utf8') : null;
   if (incoming === current) return false;

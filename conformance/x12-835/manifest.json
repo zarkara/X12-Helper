@@ -1,0 +1,251 @@
+{
+  "note": "Provenance for every file in this corpus. tools/build-conformance-info.js renders the .info sidecars from this and verifies each file still hashes to the value recorded here.",
+  "standard": "x12-835",
+  "retrieved": "2026-09-19",
+  "sources": {
+    "cosyte-x12-mit": {
+      "standard": "x12-835",
+      "name": "cosyte/x12",
+      "repository": "https://github.com/cosyte/x12",
+      "licence": "MIT",
+      "licenceUrl": "https://github.com/cosyte/x12/blob/main/LICENSE",
+      "copyright": "Copyright (c) 2026 Cosyte",
+      "attribution": "Required. MIT obliges the copyright notice and the full permission notice to travel with the file; both are in LICENSE beside it and in conformance/NOTICE.",
+      "origin": "Synthetic. The repository states its fixtures are hand-authored against the transaction-set structure, with nothing captured from a feed, a clearinghouse sample or a partner's test file, and nothing de-identified from anything. Structure is factual; no implementation-guide text is reproduced.",
+      "covers": "Medicare-shaped professional remittance, multi-claim, PLB with a WO offset, mixed CARC and RARC, a deliberately unbalanced file, and a clearinghouse quirk."
+    },
+    "diasks2-era-835-parser-mit": {
+      "standard": "x12-835",
+      "name": "diasks2/era_835_parser",
+      "repository": "https://github.com/diasks2/era_835_parser",
+      "licence": "MIT",
+      "licenceUrl": "https://github.com/diasks2/era_835_parser/blob/master/LICENSE.txt",
+      "copyright": "The MIT License (MIT). Copyright (c) 2019 Kevin S. Dias",
+      "attribution": "Required. MIT obliges the copyright notice and the full permission notice to travel with the file; both are in LICENSE beside it and in conformance/NOTICE.",
+      "origin": "Real-world-shaped remittances with names and identifiers scrubbed, committed upstream under MIT. Payer names are real organizations; patient names are obvious placeholders. Not derived from an implementation guide.",
+      "covers": "Institutional (MIA) and professional remittances, CO and PR adjustments. example_7 has the richest PLB here: FB forward balance, WO withholding, CS capitation, both signs, two transaction sets."
+    },
+    "keironstoddart-edi-835-parser-mit": {
+      "standard": "x12-835",
+      "name": "keironstoddart/edi-835-parser",
+      "repository": "https://github.com/keironstoddart/edi-835-parser",
+      "licence": "MIT",
+      "licenceUrl": "https://github.com/keironstoddart/edi-835-parser/blob/master/LICENSE",
+      "copyright": "Copyright (c) 2018 The Python Packaging Authority (as the upstream LICENSE names the holder; reproduced as found).",
+      "attribution": "Required. MIT obliges the copyright notice and the full permission notice to travel with the file; both are in LICENSE beside it and in conformance/NOTICE.",
+      "origin": "Payer-shaped test files with placeholder names and identifiers, committed upstream under MIT. Not derived from an implementation guide.",
+      "covers": "NY eMedNY Medicaid test batch with primary and secondary payers, BCBS NC, and a legacy UnitedHealthcare layout."
+    },
+    "stanza-test-fixtures-isc": {
+      "standard": "x12-835",
+      "name": "DrMkdaddy/stanza-test-fixtures",
+      "repository": "https://github.com/DrMkdaddy/stanza-test-fixtures",
+      "licence": "ISC",
+      "licenceUrl": "https://github.com/DrMkdaddy/stanza-test-fixtures/blob/main/LICENSE",
+      "copyright": "ISC License. Copyright (c) 2026 Stanza",
+      "attribution": "Required. ISC obliges the copyright notice and the permission notice to travel with the file; both are in LICENSE beside it and in conformance/NOTICE. ISC is BSD/MIT-equivalent and Apache-2.0 compatible.",
+      "origin": "Synthetic fixture with generic payer and provider names. Not derived from an implementation guide.",
+      "covers": "A minimal professional claim with a CO-45 adjustment."
+    }
+  },
+  "files": [
+    {
+      "file": "cosyte-x12-mit/835-availity-quirk.edi",
+      "source": "cosyte-x12-mit",
+      "upstreamPath": "test/fixtures/remit/835-availity-quirk.edi",
+      "commit": "8881beef5eb7ac33c2667d0fa21003f2bac9c832",
+      "permalink": "https://github.com/cosyte/x12/blob/8881beef5eb7ac33c2667d0fa21003f2bac9c832/test/fixtures/remit/835-availity-quirk.edi",
+      "retrieved": "2026-09-19",
+      "verified": "byte-identical to the upstream blob at this commit",
+      "sha256": "0ac842ca024a22c0a90028c07b38feed463c115e822553e725bdd86f75883cdc",
+      "bytes": 899
+    },
+    {
+      "file": "cosyte-x12-mit/835-carc-rarc-mix.edi",
+      "source": "cosyte-x12-mit",
+      "upstreamPath": "test/fixtures/remit/835-carc-rarc-mix.edi",
+      "commit": "8881beef5eb7ac33c2667d0fa21003f2bac9c832",
+      "permalink": "https://github.com/cosyte/x12/blob/8881beef5eb7ac33c2667d0fa21003f2bac9c832/test/fixtures/remit/835-carc-rarc-mix.edi",
+      "retrieved": "2026-09-19",
+      "verified": "byte-identical to the upstream blob at this commit",
+      "sha256": "517189468834c73a3a4d4ef3874d358823bf727725fedd1d7e56499a1a0cac5c",
+      "bytes": 747
+    },
+    {
+      "file": "cosyte-x12-mit/835-golden-serialized.edi",
+      "source": "cosyte-x12-mit",
+      "upstreamPath": "test/fixtures/golden/835.edi",
+      "commit": "8881beef5eb7ac33c2667d0fa21003f2bac9c832",
+      "permalink": "https://github.com/cosyte/x12/blob/8881beef5eb7ac33c2667d0fa21003f2bac9c832/test/fixtures/golden/835.edi",
+      "retrieved": "2026-09-19",
+      "verified": "byte-identical to the upstream blob at this commit",
+      "sha256": "f3422a9b574d6edacc1cce883d3a4c74ec40f3d442a9b01846ec552b2308d367",
+      "bytes": 800
+    },
+    {
+      "file": "cosyte-x12-mit/835-imbalance.edi",
+      "source": "cosyte-x12-mit",
+      "upstreamPath": "test/fixtures/remit/835-imbalance.edi",
+      "commit": "8881beef5eb7ac33c2667d0fa21003f2bac9c832",
+      "permalink": "https://github.com/cosyte/x12/blob/8881beef5eb7ac33c2667d0fa21003f2bac9c832/test/fixtures/remit/835-imbalance.edi",
+      "retrieved": "2026-09-19",
+      "verified": "byte-identical to the upstream blob at this commit",
+      "sha256": "79f20bd6bdffd3b73886f1f58a92fbaa31beadf1b276b157cf80f92bb395a434",
+      "bytes": 686
+    },
+    {
+      "file": "cosyte-x12-mit/835-medicare-canonical.edi",
+      "source": "cosyte-x12-mit",
+      "upstreamPath": "test/fixtures/remit/835-medicare-canonical.edi",
+      "commit": "8881beef5eb7ac33c2667d0fa21003f2bac9c832",
+      "permalink": "https://github.com/cosyte/x12/blob/8881beef5eb7ac33c2667d0fa21003f2bac9c832/test/fixtures/remit/835-medicare-canonical.edi",
+      "retrieved": "2026-09-19",
+      "verified": "byte-identical to the upstream blob at this commit",
+      "sha256": "1e40820ec4a925751cc759affe6e8eb82150efb6b3b6eec365ae80e8129d1d30",
+      "bytes": 827
+    },
+    {
+      "file": "cosyte-x12-mit/835-multi-claim.edi",
+      "source": "cosyte-x12-mit",
+      "upstreamPath": "test/fixtures/remit/835-multi-claim.edi",
+      "commit": "8881beef5eb7ac33c2667d0fa21003f2bac9c832",
+      "permalink": "https://github.com/cosyte/x12/blob/8881beef5eb7ac33c2667d0fa21003f2bac9c832/test/fixtures/remit/835-multi-claim.edi",
+      "retrieved": "2026-09-19",
+      "verified": "byte-identical to the upstream blob at this commit",
+      "sha256": "8f5478d628f272823e8561ab42ec266fa08d8ab2bc4951ef73e9628b06b85bb9",
+      "bytes": 971
+    },
+    {
+      "file": "cosyte-x12-mit/835-with-plb.edi",
+      "source": "cosyte-x12-mit",
+      "upstreamPath": "test/fixtures/remit/835-with-plb.edi",
+      "commit": "8881beef5eb7ac33c2667d0fa21003f2bac9c832",
+      "permalink": "https://github.com/cosyte/x12/blob/8881beef5eb7ac33c2667d0fa21003f2bac9c832/test/fixtures/remit/835-with-plb.edi",
+      "retrieved": "2026-09-19",
+      "verified": "byte-identical to the upstream blob at this commit",
+      "sha256": "fa078eee1c8925d5c03cfe7c835f93456a66182a53b1569cbf0ebf1c731e772b",
+      "bytes": 726
+    },
+    {
+      "file": "diasks2-era-835-parser-mit/example_1.835",
+      "source": "diasks2-era-835-parser-mit",
+      "upstreamPath": "spec/example_1.835",
+      "commit": "d6e021f4e0442ed5697eb62f974a023ab6cb1206",
+      "permalink": "https://github.com/diasks2/era_835_parser/blob/d6e021f4e0442ed5697eb62f974a023ab6cb1206/spec/example_1.835",
+      "retrieved": "2026-09-19",
+      "verified": "byte-identical to the upstream blob at this commit",
+      "sha256": "a3bb2f796307c6a525b5c24bed898ab0b0187a34b0562e37fa144c95e40fc325",
+      "bytes": 571
+    },
+    {
+      "file": "diasks2-era-835-parser-mit/example_2.835",
+      "source": "diasks2-era-835-parser-mit",
+      "upstreamPath": "spec/example_2.835",
+      "commit": "d6e021f4e0442ed5697eb62f974a023ab6cb1206",
+      "permalink": "https://github.com/diasks2/era_835_parser/blob/d6e021f4e0442ed5697eb62f974a023ab6cb1206/spec/example_2.835",
+      "retrieved": "2026-09-19",
+      "verified": "byte-identical to the upstream blob at this commit",
+      "sha256": "7ab805b8b85c4029e8828eecd4fdffc9c0411f97d3f0581037da4c122520eba5",
+      "bytes": 712
+    },
+    {
+      "file": "diasks2-era-835-parser-mit/example_3.835",
+      "source": "diasks2-era-835-parser-mit",
+      "upstreamPath": "spec/example_3.835",
+      "commit": "d6e021f4e0442ed5697eb62f974a023ab6cb1206",
+      "permalink": "https://github.com/diasks2/era_835_parser/blob/d6e021f4e0442ed5697eb62f974a023ab6cb1206/spec/example_3.835",
+      "retrieved": "2026-09-19",
+      "verified": "byte-identical to the upstream blob at this commit",
+      "sha256": "09e7d361bc1d4a3c3505b2aac94454daca6877ae770ccbcbdd4815f63a3e6ae9",
+      "bytes": 744
+    },
+    {
+      "file": "diasks2-era-835-parser-mit/example_4.835",
+      "source": "diasks2-era-835-parser-mit",
+      "upstreamPath": "spec/example_4.835",
+      "commit": "d6e021f4e0442ed5697eb62f974a023ab6cb1206",
+      "permalink": "https://github.com/diasks2/era_835_parser/blob/d6e021f4e0442ed5697eb62f974a023ab6cb1206/spec/example_4.835",
+      "retrieved": "2026-09-19",
+      "verified": "byte-identical to the upstream blob at this commit",
+      "sha256": "0033ee2b514af57c759cf8b3b773bff73093bf06006919b7f806c23c49d265c0",
+      "bytes": 762
+    },
+    {
+      "file": "diasks2-era-835-parser-mit/example_5.835",
+      "source": "diasks2-era-835-parser-mit",
+      "upstreamPath": "spec/example_5.835",
+      "commit": "d6e021f4e0442ed5697eb62f974a023ab6cb1206",
+      "permalink": "https://github.com/diasks2/era_835_parser/blob/d6e021f4e0442ed5697eb62f974a023ab6cb1206/spec/example_5.835",
+      "retrieved": "2026-09-19",
+      "verified": "byte-identical to the upstream blob at this commit",
+      "sha256": "86457d63b98808001131c3489009b773239c2d460feb9050be1305d1fa574eb3",
+      "bytes": 827
+    },
+    {
+      "file": "diasks2-era-835-parser-mit/example_6.835",
+      "source": "diasks2-era-835-parser-mit",
+      "upstreamPath": "spec/example_6.835",
+      "commit": "d6e021f4e0442ed5697eb62f974a023ab6cb1206",
+      "permalink": "https://github.com/diasks2/era_835_parser/blob/d6e021f4e0442ed5697eb62f974a023ab6cb1206/spec/example_6.835",
+      "retrieved": "2026-09-19",
+      "verified": "byte-identical to the upstream blob at this commit",
+      "sha256": "0734d1d9d31812372028317f61a19afa89a1ab727c7d0c807bb3556e9f81a6b3",
+      "bytes": 1522
+    },
+    {
+      "file": "diasks2-era-835-parser-mit/example_7.835",
+      "source": "diasks2-era-835-parser-mit",
+      "upstreamPath": "spec/example_7.835",
+      "commit": "d6e021f4e0442ed5697eb62f974a023ab6cb1206",
+      "permalink": "https://github.com/diasks2/era_835_parser/blob/d6e021f4e0442ed5697eb62f974a023ab6cb1206/spec/example_7.835",
+      "retrieved": "2026-09-19",
+      "verified": "byte-identical to the upstream blob at this commit",
+      "sha256": "4b3213fe15aeb98f1ddc60cd4354d650304d43e595548ba479c5cfbaa447d2d5",
+      "bytes": 1247
+    },
+    {
+      "file": "keironstoddart-edi-835-parser-mit/blue_cross_nc_sample.txt",
+      "source": "keironstoddart-edi-835-parser-mit",
+      "upstreamPath": "tests/test_edi_835_files/blue_cross_nc_sample.txt",
+      "commit": "5aa9dd239ef55543844c842b65ab6f691be3f386",
+      "permalink": "https://github.com/keironstoddart/edi-835-parser/blob/5aa9dd239ef55543844c842b65ab6f691be3f386/tests/test_edi_835_files/blue_cross_nc_sample.txt",
+      "retrieved": "2026-09-19",
+      "verified": "byte-identical to the upstream blob at this commit",
+      "sha256": "a85659d0aaa3049748df35ae834a2fb8201503dc421806b977d01a94a40152bf",
+      "bytes": 703
+    },
+    {
+      "file": "keironstoddart-edi-835-parser-mit/emedny_sample.txt",
+      "source": "keironstoddart-edi-835-parser-mit",
+      "upstreamPath": "tests/test_edi_835_files/emedny_sample.txt",
+      "commit": "5aa9dd239ef55543844c842b65ab6f691be3f386",
+      "permalink": "https://github.com/keironstoddart/edi-835-parser/blob/5aa9dd239ef55543844c842b65ab6f691be3f386/tests/test_edi_835_files/emedny_sample.txt",
+      "retrieved": "2026-09-19",
+      "verified": "byte-identical to the upstream blob at this commit",
+      "sha256": "1df353c2bdff8d26f546b3c356a8e25eeed5e3abe9c53060e3f285f0d64dbd51",
+      "bytes": 1813
+    },
+    {
+      "file": "keironstoddart-edi-835-parser-mit/united_healthcare_legacy_sample.txt",
+      "source": "keironstoddart-edi-835-parser-mit",
+      "upstreamPath": "tests/test_edi_835_files/united_healthcare_legacy_sample.txt",
+      "commit": "5aa9dd239ef55543844c842b65ab6f691be3f386",
+      "permalink": "https://github.com/keironstoddart/edi-835-parser/blob/5aa9dd239ef55543844c842b65ab6f691be3f386/tests/test_edi_835_files/united_healthcare_legacy_sample.txt",
+      "retrieved": "2026-09-19",
+      "verified": "byte-identical to the upstream blob at this commit",
+      "sha256": "48604ea7ab0cf68f75397ea5b4e340e8344ec644bb5aa17eebd8b2880c90bfbe",
+      "bytes": 1693
+    },
+    {
+      "file": "stanza-test-fixtures-isc/835-remittance-advice.edi",
+      "source": "stanza-test-fixtures-isc",
+      "upstreamPath": "samples/835-remittance-advice.edi",
+      "commit": "63e3feec950f150c4e71bb16f703fe960dcfe6b6",
+      "permalink": "https://github.com/DrMkdaddy/stanza-test-fixtures/blob/63e3feec950f150c4e71bb16f703fe960dcfe6b6/samples/835-remittance-advice.edi",
+      "retrieved": "2026-09-19",
+      "verified": "byte-identical to the upstream blob at this commit",
+      "sha256": "afb785a27723cce0d006f794c0c7019e4f2f2f8aa168a1fc65894b3d1839e4fb",
+      "bytes": 556
+    }
+  ]
+}

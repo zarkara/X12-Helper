@@ -22,6 +22,31 @@
     dictionaries[standardId] = dictionary;
   }
 
+  /**
+   * Adds more of the same standard to a dictionary that is already registered.
+   *
+   * A dictionary for a real standard is too big for one readable file, and a
+   * fork that wants to describe extra segments should not have to edit ours.
+   * Both cases are the same operation: merge another part in. Unlike a profile
+   * this carries no `source`, because the result is still the base standard.
+   */
+  function extendDictionary(standardId, part) {
+    if (!part || typeof part !== 'object' || Array.isArray(part)) {
+      throw new Error('extendDictionary needs a dictionary part object');
+    }
+    const dictionary = getDictionary(standardId);
+    ['segments', 'tables', 'dataTypes', 'messageTypes'].forEach((section) => {
+      const additions = part[section];
+      if (!additions) return;
+      const target = dictionary[section] || (dictionary[section] = {});
+      Object.entries(additions).forEach(([key, value]) => {
+        if (target[key]) throw new Error(`${standardId} already defines ${section}.${key}`);
+        target[key] = value;
+      });
+    });
+    return dictionary;
+  }
+
   function getDictionary(standardId) {
     const dictionary = dictionaries[standardId];
     if (!dictionary) throw new Error(`No dictionary registered for standard "${standardId}"`);
@@ -138,6 +163,7 @@
 
   Object.assign(HCX, {
     registerDictionary,
+    extendDictionary,
     getDictionary,
     registerProfile,
     validateProfile,
