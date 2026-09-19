@@ -5,7 +5,7 @@
   "description": "A browser-only page that turns an X12 835 remittance advice into a readable document.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/zarkara/X12-835-Helper.git"
+    "url": "https://github.com/zarkara/X12-Helper.git"
   },
   "engines": {
     "node": ">=20"

@@ -3,3 +3,4 @@ node_modules/
 # Never commit real traffic. Keep local test files here.
 private/
 *.phi.*
+delete/
